@@ -6,7 +6,7 @@
     <div>
       <em
         >From {{ email.from }} on
-        {{ format(new Date(email.sentAt), "MMM do yyyy") }}</em
+        {{ format(new Date(email.sentAt), 'MMM do yyyy') }}</em
       >
     </div>
     <div class="email-body" v-html="marked(email.body)" />
@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { format } from "date-fns";
-import marked from "marked";
+import { format } from 'date-fns'
+import marked from 'marked'
 
 export default {
   props: {
@@ -28,9 +28,9 @@ export default {
     return {
       format,
       marked,
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>

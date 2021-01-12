@@ -26,7 +26,7 @@
           </p>
         </td>
         <td class="date">
-          {{ format(new Date(email.sentAt), "MMM do yyyy") }}
+          {{ format(new Date(email.sentAt), 'MMM do yyyy') }}
         </td>
         <td><button @click="archiveEmail(email)">Archive</button></td>
       </tr>
@@ -38,50 +38,50 @@
 </template>
 
 <script>
-import axios from "axios";
-import { format } from "date-fns";
-import { ref } from "vue";
-import MailView from "@/components/MailView.vue";
-import ModalView from "@/components/ModalView.vue";
+import axios from 'axios'
+import { format } from 'date-fns'
+import { ref } from 'vue'
+import MailView from '@/components/MailView.vue'
+import ModalView from '@/components/ModalView.vue'
 
 export default {
-  name: "MailTable",
+  name: 'MailTable',
   components: { MailView, ModalView },
   async setup() {
-    const { data: emails } = await axios.get("http://localhost:3001/emails");
+    const { data: emails } = await axios.get('http://localhost:3001/emails')
 
     return {
       format,
       emails: ref(emails),
       openedEmail: ref(null),
-    };
+    }
   },
   computed: {
     sortedEmails() {
       return this.emails.sort((email1, email2) =>
         email1.sentAt < email2.sentAt ? 1 : -1
-      );
+      )
     },
     unarchivedEmails() {
-      return this.emails.filter((email) => !email.archived);
+      return this.emails.filter((email) => !email.archived)
     },
   },
   methods: {
     openEmail(email) {
-      email.read = true;
-      this.updateEmail(email);
-      this.openedEmail = email;
-      console.log(this.openedEmail);
+      email.read = true
+      this.updateEmail(email)
+      this.openedEmail = email
+      console.log(this.openedEmail)
     },
     archiveEmail(email) {
-      email.archived = true;
-      this.updateEmail(email);
+      email.archived = true
+      this.updateEmail(email)
     },
     updateEmail(email) {
-      axios.put(`http://localhost:3001/emails/${email.id}`, email);
+      axios.put(`http://localhost:3001/emails/${email.id}`, email)
     },
   },
-};
+}
 </script>
 
 <style scoped>

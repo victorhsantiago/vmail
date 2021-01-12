@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import MailTable from "./components/MailTable.vue";
+import MailTable from './components/MailTable.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     MailTable,
   },
-};
+}
 </script>
 
 <style>

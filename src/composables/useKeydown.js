@@ -1,8 +1,8 @@
 import { onBeforeUnmount } from 'vue'
 
-const useKeydown = (keyCombos) => {
-  const onKeydown = (event) => {
-    const keyCombo = keyCombos.find((keyCombo) => keyCombo.key === event.key)
+const useKeydown = keyCombos => {
+  const onKeydown = event => {
+    const keyCombo = keyCombos.find(keyCombo => keyCombo.key === event.key)
     keyCombo && keyCombo.fn()
   }
 

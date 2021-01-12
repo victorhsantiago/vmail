@@ -8,17 +8,17 @@
 </template>
 
 <script>
-import useKeydown from "../composables/useKeydown";
+import useKeydown from '../composables/useKeydown'
 
 export default {
   setup(props, { emit }) {
-    useKeydown([{ key: "Escape", fn: () => emit("closeModal") }]);
+    useKeydown([{ key: 'Escape', fn: () => emit('closeModal') }])
 
     return {
       emit,
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>
