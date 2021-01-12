@@ -9,7 +9,7 @@
           'clickable',
           email.read ? 'mail-table-row--read' : '',
         ]"
-        @click="readEmail(email)"
+        @click="openEmail(email)"
       >
         <td><input type="checkbox" name="" id="" /></td>
         <td
@@ -32,20 +32,28 @@
       </tr>
     </tbody>
   </table>
+  <ModalView v-if="openedEmail" @closeModal="openedEmail = null">
+    <MailView :email="openedEmail" />
+  </ModalView>
 </template>
 
 <script>
 import axios from "axios";
 import { format } from "date-fns";
 import { ref } from "vue";
+import MailView from "@/components/MailView.vue";
+import ModalView from "@/components/ModalView.vue";
 
 export default {
-  name: "App",
+  name: "MailTable",
+  components: { MailView, ModalView },
   async setup() {
     const { data: emails } = await axios.get("http://localhost:3001/emails");
+
     return {
       format,
       emails: ref(emails),
+      openedEmail: ref(null),
     };
   },
   computed: {
@@ -59,9 +67,11 @@ export default {
     },
   },
   methods: {
-    readEmail(email) {
+    openEmail(email) {
       email.read = true;
       this.updateEmail(email);
+      this.openedEmail = email;
+      console.log(this.openedEmail);
     },
     archiveEmail(email) {
       email.archived = true;
@@ -74,7 +84,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mail-table {
   max-width: 1000px;
   margin: auto;
