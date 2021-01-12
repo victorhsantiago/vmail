@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+button {
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 5px 10px 5px 0px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+button:disabled {
+  cursor: auto;
+}
+
+button.selected {
+  cursor: auto;
+  color: black;
+  border-color: black;
+  border-width: 2px;
+}
+
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 2px;
+  border: 1px solid #555;
+  position: relative;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+input[type='checkbox'].partial-check {
+  background: #abc;
+}
+
+input[type='checkbox']:checked {
+  background: #679;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
