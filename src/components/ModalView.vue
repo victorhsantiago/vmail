@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import useKeydown from '../composables/useKeydown'
+import useKeydown from '@/composables/useKeydown'
 
 export default {
   setup(props, { emit }) {
