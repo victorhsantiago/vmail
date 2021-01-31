@@ -1,7 +1,7 @@
 # :email: Vmail
 
 <p>
-  This is a study project to delve into some of the new features present on Vue 3.0. It's a email app where you'll have a list of new emails that you can navigate trough, mark as read and unread, as well archive them. It was a lot fun building it and learning new stuff. 😄
+  This is a study project to delve into some of the new features present on Vue 3.0, such as Composition API, Reactivity, and Composables. It's a email app where you'll have a list of new emails that you can navigate trough, mark as read and unread, as well archive them. It was a lot fun building it and learning new stuff. 😄
 </p>
 
 ## Installing / Getting started
