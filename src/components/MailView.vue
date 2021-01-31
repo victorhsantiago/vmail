@@ -26,9 +26,7 @@
 <script>
 import { format } from 'date-fns'
 import marked from 'marked'
-import axios from 'axios'
 import useKeydown from '@/composables/useKeydown'
-import { tr } from 'date-fns/locale'
 
 export default {
   props: {

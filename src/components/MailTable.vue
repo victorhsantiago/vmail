@@ -1,10 +1,23 @@
 <template>
-  <h1>{{ emailSelection.selectedEmails.size }}</h1>
-  <BulkActionBar :emails="unarchivedEmails" />
+  <button
+    @click="selectScreen('inbox')"
+    :disabled="selectedScreen === 'inbox'"
+  >
+    Inbox
+  </button>
+  <button
+    @click="selectScreen('archived')"
+    :disabled="selectedScreen === 'archived'"
+  >
+    Archived
+  </button>
+
+  <BulkActionBar :emails="filteredEmails" />
+
   <table class="mail-table">
     <tbody>
       <tr
-        v-for="email in unarchivedEmails"
+        v-for="email in filteredEmails"
         :key="email.id"
         :class="[
           'mail-table-row',
@@ -40,6 +53,7 @@
       </tr>
     </tbody>
   </table>
+
   <ModalView v-if="openedEmail" @closeModal="closeModal">
     <MailView :email="openedEmail" @changeEmail="changeEmail" />
   </ModalView>
@@ -48,7 +62,7 @@
 <script>
 import axios from 'axios'
 import { format } from 'date-fns'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import useEmailSelection from '@/composables/useEmailSelection'
 import BulkActionBar from '@/components/BulkActionBar.vue'
 import MailView from '@/components/MailView.vue'
@@ -65,6 +79,7 @@ export default {
       format,
       emails: ref(emails),
       openedEmail: ref(null),
+      selectedScreen: ref('inbox')
     }
   },
   computed: {
@@ -73,8 +88,10 @@ export default {
         email1.sentAt < email2.sentAt ? 1 : -1
       )
     },
-    unarchivedEmails() {
-      return this.emails.filter((email) => !email.archived)
+    filteredEmails() {
+      return this.emails.filter((email) => {
+        return this.selectedScreen === 'inbox' ? !email.archived : email.archived
+      })
     },
   },
   methods: {
@@ -103,12 +120,16 @@ export default {
       if (save) this.updateEmail(email)
       if (closeModal) this.closeModal()
       if (changeIndex) {
-        const emails = this.unarchivedEmails
+        const emails = this.filteredEmails
         const currentIndex = emails.indexOf(email)
         const newEmail = emails[currentIndex + changeIndex]
         this.openEmail(newEmail)
       }
     },
+    selectScreen(newScreen) {
+      this.selectedScreen = newScreen
+      this.emailSelection.clear()
+    }
   },
 }
 </script>

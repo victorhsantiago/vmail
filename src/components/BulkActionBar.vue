@@ -33,12 +33,12 @@ export default {
   setup({ emails }) {
     const emailSelection = useEmailSelection()
     const numberSelected = computed(() => emailSelection.selectedEmails.size)
-    const numberEmails = emails.length
+    const numberEmails = computed(() => emails.length)
     const allEmailsSelected = computed(
-      () => numberSelected.value === numberEmails
+      () => numberSelected.value === numberEmails.value
     )
     const someEmailSelected = computed(() => {
-      return numberSelected.value > 0 && numberSelected.value < numberEmails
+      return numberSelected.value > 0 && numberSelected.value < numberEmails.value
     })
 
     const bulkSelect = () => {
