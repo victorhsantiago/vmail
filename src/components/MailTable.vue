@@ -1,4 +1,6 @@
 <template>
+  <h1>{{ emailSelection.selectedEmails.size }}</h1>
+  <BulkActionBar :emails="unarchivedEmails" />
   <table class="mail-table">
     <tbody>
       <tr
@@ -9,15 +11,21 @@
           'clickable',
           email.read ? 'mail-table-row--read' : '',
         ]"
-        @click="openEmail(email)"
       >
-        <td><input type="checkbox" name="" id="" /></td>
+        <td>
+          <input
+            type="checkbox"
+            @click="emailSelection.toggle(email)"
+            :checked="emailSelection.selectedEmails.has(email)"
+          />
+        </td>
         <td
           :class="['mail-table-from', email.read ? '' : 'mail-table--unread']"
+          @click="openEmail(email)"
         >
           {{ email.from }}
         </td>
-        <td>
+        <td @click="openEmail(email)">
           <p>
             <span :class="[email.read ? '' : 'mail-table--unread']">{{
               email.subject
@@ -25,7 +33,7 @@
             - {{ email.body }}
           </p>
         </td>
-        <td class="date">
+        <td class="date" @click="openEmail(email)">
           {{ format(new Date(email.sentAt), 'MMM do yyyy') }}
         </td>
         <td><button @click="archiveEmail(email)">Archive</button></td>
@@ -40,17 +48,20 @@
 <script>
 import axios from 'axios'
 import { format } from 'date-fns'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
+import useEmailSelection from '@/composables/useEmailSelection'
+import BulkActionBar from '@/components/BulkActionBar.vue'
 import MailView from '@/components/MailView.vue'
 import ModalView from '@/components/ModalView.vue'
 
 export default {
   name: 'MailTable',
-  components: { MailView, ModalView },
+  components: { MailView, ModalView, BulkActionBar },
   async setup() {
     const { data: emails } = await axios.get('http://localhost:3001/emails')
 
     return {
+      emailSelection: useEmailSelection(),
       format,
       emails: ref(emails),
       openedEmail: ref(null),
